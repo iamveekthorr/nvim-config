@@ -1,5 +1,6 @@
 return {
   "jinh0/eyeliner.nvim",
+  event = "BufEnter",
   opts = {
     highlight_on_key = true,
     disabled_buftypes = { "nofile" },

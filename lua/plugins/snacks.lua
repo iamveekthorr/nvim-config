@@ -12,6 +12,9 @@ return {
     terminal = { enabled = false },
     scroll = { enabled = false },
     animate = { enabled = false },
+    explorer = {
+      replace_netrw = true,
+    },
     picker = {
       sources = {
         explorer = {
@@ -43,6 +46,11 @@ return {
                 border = "rounded",
                 title_pos = "center",
               },
+            },
+          },
+          win = {
+            list = {
+              wo = { relativenumber = true },
             },
           },
         },

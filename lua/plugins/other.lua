@@ -40,15 +40,31 @@ local nestjs = {
   },
 }
 
+local react = {
+  {
+    pattern = "(.*)/components/(.*)/(.*)([%.component]?).([tj]sx?)$",
+    target = {
+      {
+        target = "%1/components/%2/\\(*.styles.ts\\|*.style.ts\\)",
+        context = "style",
+      },
+    },
+  },
+  {
+    pattern = "(.*)/components/(.*)/(.*).style([s]?).ts$",
+    target = {
+      {
+        target = "%1/components/%2/\\(*.component.tsx\\|index.tsx\\)",
+        context = "component",
+      },
+    },
+  },
+}
+
 return {
   "rgroli/other.nvim",
   event = "VeryLazy",
   opts = {
-    mappings = {
-      "react",
-      "golang",
-      nestjs,
-    },
     rememberBuffers = false,
     style = {
       newFileIndicator = "Create new:",
@@ -64,6 +80,13 @@ return {
     { "<leader>ou", "<cmd>Other util<cr>", desc = "Go to other util" },
   },
   config = function(_, opts)
+    local mappings = { "golang", nestjs }
+
+    for _, v in pairs(react) do
+      table.insert(mappings, v)
+    end
+
+    opts.mappings = mappings
     require("other-nvim").setup(opts)
   end,
 }

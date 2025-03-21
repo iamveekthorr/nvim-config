@@ -78,7 +78,14 @@ if vim.fn.executable("lazygit") == 1 then
 end
 
 -- Normal mode
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line below to current line and leave the cursor position as is" })
+-- the mark preserves the cursor's current location
+-- delm z deletes the mark
+vim.keymap.set(
+  "n",
+  "J",
+  "mzJ`z<cmd>delm z<cr>",
+  { desc = "Join line below to current line and leave the cursor position as is" }
+)
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Jump down and center" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Jump up and center" })

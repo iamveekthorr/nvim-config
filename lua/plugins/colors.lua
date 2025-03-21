@@ -2,7 +2,6 @@ return {
   {
     "folke/tokyonight.nvim",
     enabled = false,
-
     opts = {
       transparent = true,
       styles = {
@@ -14,18 +13,6 @@ return {
   },
 
   {
-    "ribru17/bamboo.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("bamboo").setup({
-        transparent = true,
-      })
-      -- require("bamboo").load()
-    end,
-  },
-
-  {
     "scottmckendry/cyberdream.nvim",
     opts = {
       transparent = true,
@@ -34,10 +21,15 @@ return {
   },
 
   {
-    "diegoulloao/neofusion.nvim",
-    opts = {
-      transparent_mode = true,
-    },
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("gruvbox").setup({
+        transparent_mode = true,
+        contrast = "soft",
+      })
+    end,
   },
 
   {

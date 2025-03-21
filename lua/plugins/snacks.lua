@@ -107,7 +107,13 @@ return {
       LazyVim.pick("oldfiles"),
       desc = "Recent (All)",
     },
-    { "<leader>s<cr>", "<cmd>FzfLua resume<cr>", desc = "Resume" },
+    {
+      "<leader>s<cr>",
+      function()
+        Snacks.picker.resume()
+      end,
+      desc = "Resume",
+    },
     { "<leader>sg", LazyVim.pick("live_grep", { root = false }), desc = "Grep (Root Dir)" },
     {
       "<leader>sG",

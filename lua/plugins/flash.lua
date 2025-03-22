@@ -9,6 +9,9 @@ return {
         highlight = {
           backdrop = false,
         },
+        jump = {
+          autojump = true,
+        },
       },
     },
   },

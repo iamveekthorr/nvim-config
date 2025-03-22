@@ -21,18 +21,6 @@ return {
   },
 
   {
-    "ellisonleao/gruvbox.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("gruvbox").setup({
-        transparent_mode = true,
-        contrast = "soft",
-      })
-    end,
-  },
-
-  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "cyberdream",

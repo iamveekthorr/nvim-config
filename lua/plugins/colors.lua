@@ -21,9 +21,24 @@ return {
   },
 
   {
+    "luisiacc/gruvbox-baby",
+    config = function()
+      vim.g.gruvbox_baby_transparent_mode = 1
+      vim.g.gruvbox_baby_function_style = "strikethrough"
+    end,
+  },
+
+  {
+    "aktersnurra/no-clown-fiesta.nvim",
+    opts = {
+      transparent = true,
+    },
+  },
+
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "cyberdream",
+      colorscheme = "gruvbox-baby",
       defaults = {
         keymaps = false,
       },

@@ -35,9 +35,6 @@ vim.keymap.set("n", "<leader>xq", function()
   end
 end, { desc = "Quickfix List" })
 
-vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
-vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
-
 -- diagnostic
 local diagnostic_goto = function(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
@@ -47,8 +44,6 @@ local diagnostic_goto = function(next, severity)
   end
 end
 vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-vim.keymap.set("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
-vim.keymap.set("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
 vim.keymap.set("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
 vim.keymap.set("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 vim.keymap.set("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
@@ -63,15 +58,15 @@ if vim.fn.executable("lazygit") == 1 then
   vim.keymap.set("n", "<leader>gg", function()
     Snacks.lazygit({ cwd = LazyVim.root.git() })
   end, { desc = "Lazygit (Root Dir)" })
-  vim.keymap.set("n", "<leader>gG", function()
-    Snacks.lazygit()
-  end, { desc = "Lazygit (cwd)" })
+
   vim.keymap.set("n", "<leader>gf", function()
     Snacks.picker.git_log_file()
   end, { desc = "Git Current File History" })
+
   vim.keymap.set("n", "<leader>gl", function()
     Snacks.picker.git_log({ cwd = LazyVim.root.git() })
   end, { desc = "Git Log" })
+
   vim.keymap.set("n", "<leader>gL", function()
     Snacks.picker.git_log()
   end, { desc = "Git Log (cwd)" })

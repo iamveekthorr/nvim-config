@@ -4,10 +4,8 @@ return {
     inlay_hints = {
       enabled = false,
     },
-    diagnostics = {
-      virtual_lines = {
-        current_line = true,
-      },
+    servers = {
+      nginx_language_server = {},
     },
   },
 }

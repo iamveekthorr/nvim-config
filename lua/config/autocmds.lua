@@ -29,7 +29,6 @@
 --   end,
 -- })
 -- Set filetype for nginx
-vim.cmd([[filetype off]])
 vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.conf*]])
 vim.cmd([[autocmd BufRead,BufNewFile *.conf,*.conf.template set filetype=nginx]])
 vim.cmd([[autocmd FileType nginx setlocal iskeyword+=$]])

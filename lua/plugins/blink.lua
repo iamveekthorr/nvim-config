@@ -3,9 +3,13 @@ return {
   event = "InsertEnter",
   opts = {
     keymap = {
-      ["<Tab>"] = { "show_and_insert", "select_next" },
+      ["<C-p>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-c>"] = { "cancel" },
-      ["<S-Tab>"] = { "select_prev" },
+      ["<Up>"] = { "select_prev", "fallback" },
+      ["<Down>"] = { "select_next", "fallback" },
+      ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+      ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+      ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
     },
     completion = {
       trigger = {

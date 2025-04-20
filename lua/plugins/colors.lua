@@ -29,13 +29,6 @@ return {
   },
 
   {
-    "aktersnurra/no-clown-fiesta.nvim",
-    opts = {
-      transparent = true,
-    },
-  },
-
-  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "gruvbox-baby",

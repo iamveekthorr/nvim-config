@@ -29,9 +29,19 @@ return {
   },
 
   {
+    "egerhether/heatherfield.nvim",
+    opts = {
+      transparent_background = true,
+      custom_highlights = {
+        StatusLine = { bg = "NONE", fg = "NONE" },
+      },
+    },
+  },
+
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox-baby",
+      colorscheme = "heatherfield",
       defaults = {
         keymaps = false,
       },

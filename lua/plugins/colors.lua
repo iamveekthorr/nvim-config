@@ -41,7 +41,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "heatherfield",
+      colorscheme = "gruvbox-baby",
       defaults = {
         keymaps = false,
       },

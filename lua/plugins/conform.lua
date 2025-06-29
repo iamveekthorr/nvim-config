@@ -6,6 +6,8 @@ return {
       nginx = { "nginxfmt" },
       nix = { "nil" },
       toml = { "pyproject-fmt" },
+      css = { "prettier" },
+      scss = { "prettier" },
     },
   },
 }

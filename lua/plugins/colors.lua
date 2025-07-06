@@ -1,7 +1,7 @@
 return {
   {
     "folke/tokyonight.nvim",
-    enabled = false,
+    enabled = true,
     opts = {
       transparent = true,
       styles = {
@@ -24,7 +24,7 @@ return {
     "luisiacc/gruvbox-baby",
     config = function()
       vim.g.gruvbox_baby_transparent_mode = 1
-      vim.g.gruvbox_baby_function_style = "strikethrough"
+      -- vim.g.gruvbox_baby_function_style = "strikethrough"
     end,
   },
 
@@ -41,7 +41,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox-baby",
+      colorscheme = "tokyonight",
       defaults = {
         keymaps = false,
       },

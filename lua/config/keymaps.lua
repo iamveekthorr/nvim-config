@@ -92,8 +92,8 @@ vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Move to previo
 
 vim.keymap.set("n", "<C-q>", "<cmd>qa!<CR>", { desc = "Quit nvim violently" })
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save buffer" })
-vim.keymap.set("n", "|", "<cmd>vsplit<cr>", { desc = "Vertical split" })
-vim.keymap.set("n", "\\", "<cmd>split<cr>", { desc = "Horizontal split" })
+vim.keymap.set("n", "|", "<cmd>split<cr>", { desc = "Vertical split" })
+vim.keymap.set("n", "\\", "<cmd>vsplit<cr>", { desc = "Horizontal split" })
 
 -- Visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selections down" })

@@ -6,6 +6,7 @@ return {
     },
     servers = {
       nginx_language_server = {},
+      nil_ls = {},
     },
   },
 }

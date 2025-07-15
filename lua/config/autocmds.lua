@@ -32,3 +32,33 @@
 vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.conf*]])
 vim.cmd([[autocmd BufRead,BufNewFile *.conf,*.conf.template set filetype=nginx]])
 vim.cmd([[autocmd FileType nginx setlocal iskeyword+=$]])
+-- Set comment for package name in file to avoid golint warnings
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
+  pattern = "*.go",
+  callback = function()
+    vim.schedule(function()
+      local buf_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+      if #buf_lines == 1 and buf_lines[1] == "" then
+        local filepath = vim.fn.expand("%:p")
+        local parent_dir = vim.fn.fnamemodify(filepath, ":h:t") -- get folder name
+        local filename = vim.fn.expand("%:t:r") -- get file name without extension
+
+        -- Use parent dir if not in root, else fallback to filename
+        local relative_path = vim.fn.fnamemodify(filepath, ":.")
+
+        local package_name = parent_dir
+        if not relative_path:match(".-/") then
+          package_name = filename
+        end
+
+        local lines = {
+          "// Package " .. package_name .. " provides TODO: add description",
+          "package " .. package_name,
+          "",
+        }
+        vim.api.nvim_buf_set_lines(0, 0, 0, false, lines)
+        vim.api.nvim_win_set_cursor(0, { 1, 20 })
+      end
+    end)
+  end,
+})

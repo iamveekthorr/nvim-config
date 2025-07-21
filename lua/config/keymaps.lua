@@ -86,6 +86,10 @@ vim.keymap.set("n", "\\", "<cmd>vsplit<cr>", { desc = "Horizontal split" })
 -- Visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selections down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selections up" })
+-- Wrap visually selected text in parentheses
+vim.keymap.set("v", "<leader>p", 'c(<C-r>")<Esc>', { desc = "Wrap selection in parentheses" })
+vim.keymap.set("v", "<leader>b", 'c[<C-r>"]<Esc>', { desc = "Wrap selection in brackets" })
+vim.keymap.set("v", "<leader>B", 'c{<C-r>"}<Esc>', { desc = "Wrap selection in braces" })
 
 vim.keymap.set("n", "<leader><BS>", function()
   Snacks.bufdelete.delete()

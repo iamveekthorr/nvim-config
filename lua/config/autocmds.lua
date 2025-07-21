@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
           "",
         }
         vim.api.nvim_buf_set_lines(0, 0, 0, false, lines)
-        vim.api.nvim_win_set_cursor(0, { 1, 20 })
+        vim.api.nvim_win_set_cursor(0, { 1, #vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] })
       end
     end)
   end,

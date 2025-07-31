@@ -1,5 +1,6 @@
 return {
   "folke/which-key.nvim",
+  enabled = false,
   opts = {
     spec = {
       { "<leader>w", hidden = true },

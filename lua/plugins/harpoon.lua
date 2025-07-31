@@ -5,7 +5,7 @@ return {
   event = "VeryLazy",
   config = function()
     local harpoon = require("harpoon")
-    local wk = require("which-key")
+    -- local wk = require("which-key")
 
     harpoon:setup({
       settings = {
@@ -17,7 +17,7 @@ return {
       },
     })
 
-    wk.add({ { "<leader>h", group = "Harpoon" } })
+    -- wk.add({ { "<leader>h", group = "Harpoon" } })
 
     vim.keymap.set("n", "<leader>ha", function()
       harpoon:list():add()

@@ -19,28 +19,47 @@ return {
       require("catppuccin").setup({
         flavour = "auto", -- or latte, frappe, macchiato
         transparent_background = true,
-        CatppuccinOptions: "float",
+        show_end_of_buffer = false,
         integrations = {
           cmp = true,
           nvimtree = true,
           treesitter = true,
           telescope = {
             enabled = true,
-            style = "nvchad",
+            style = nil,
           },
         },
-        highlight_overrides = {
-          all = function(colors)
-            return {
-              NormalFloat = { bg = "NONE" },
-              FloatBorder = { bg = "NONE" },
-              FloatTitle = { bg = "NONE" },
-              Pmenu = { bg = "NONE" },
-              PmenuSel = { bg = colors.surface0 },
-            }
-          end,
+        float = { transparent = true, solid = true },
+        styles = {
+          comments = { "italic" },
+          conditionals = { "italic" },
+          -- floats = "transparent",
         },
+        custom_highlights = function(colors)
+          return {
+            Normal = { bg = "NONE" },
+            NormalNC = { bg = "NONE" },
+            CursorLine = { bg = "NONE" },
+            SignColumn = { bg = "NONE" },
+            LineNr = { bg = "NONE" },
+            CursorLineNr = { bg = "NONE" },
+            EndOfBuffer = { bg = "NONE" },
+            NormalFloat = { bg = "NONE" },
+            FloatBorder = { bg = "NONE" },
+            Pmenu = { bg = "NONE" },
+            PmenuSel = { bg = "NONE", fg = colors.pink },
+            WinSeparator = { bg = "NONE" },
+          }
+        end,
       })
+
+      -- vim.cmd.colorscheme("catppuccin")
+
+      -- Additional transparency settings
+      -- vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+      -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
+      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+      -- vim.api.nvim_set_hl(0, "Pmenu", { bg = "NONE" })
     end,
   },
 

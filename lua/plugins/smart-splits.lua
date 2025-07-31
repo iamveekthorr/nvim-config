@@ -4,7 +4,7 @@ return {
   dependencies = { "szw/vim-maximizer" },
   config = function()
     local smartsplits = require("smart-splits")
-    local wk = require("which-key")
+    -- local wk = require("which-key")
 
     smartsplits.setup({
       cursor_follows_swapped_bufs = true,
@@ -24,14 +24,14 @@ return {
     vim.keymap.set("n", "<C-k>", smartsplits.move_cursor_up, { desc = "Move cursor up" })
     vim.keymap.set("n", "<C-l>", smartsplits.move_cursor_right, { desc = "Move cursor right" })
 
-    wk.add({ "<leader><leader>", group = "Swap buffer" })
+    -- wk.add({ "<leader><leader>", group = "Swap buffer" })
 
     vim.keymap.set("n", "<leader><leader>h", smartsplits.swap_buf_left, { desc = "Swap buffer left" })
     vim.keymap.set("n", "<leader><leader>j", smartsplits.swap_buf_down, { desc = "Swap buffer down" })
     vim.keymap.set("n", "<leader><leader>k", smartsplits.swap_buf_up, { desc = "Swap buffer up" })
     vim.keymap.set("n", "<leader><leader>l", smartsplits.swap_buf_right, { desc = "Swap buffer right" })
 
-    wk.add({ "<leader>p", group = "Split actions" })
+    -- wk.add({ "<leader>p", group = "Split actions" })
 
     vim.keymap.set({ "n", "v" }, "<leader>pm", "<cmd>MaximizerToggle!<CR>", { desc = "Toggle maximize current split" })
 

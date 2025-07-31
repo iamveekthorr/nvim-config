@@ -3,7 +3,7 @@ return {
   event = "VeryLazy",
   config = function()
     local substitute = require("substitute")
-    local wk = require("which-key")
+    -- local wk = require("which-key")
 
     substitute.setup({
       on_substitute = require("yanky.integration").substitute(),
@@ -38,7 +38,7 @@ return {
     )
 
     -- Range
-    wk.add({ { "<leader>r", group = "Substitue range" } })
+    -- wk.add({ { "<leader>r", group = "Substitue range" } })
     vim.keymap.set("n", "<leader>r", require("substitute.range").operator, {
       noremap = true,
       desc = "Substitute selection (with motion) and destination (with motion) with input that would be specified",

@@ -19,13 +19,14 @@ return {
       require("catppuccin").setup({
         flavour = "auto", -- or latte, frappe, macchiato
         transparent_background = true,
+        CatppuccinOptions: "float",
         integrations = {
           cmp = true,
           nvimtree = true,
           treesitter = true,
           telescope = {
             enabled = true,
-            style = nil,
+            style = "nvchad",
           },
         },
         highlight_overrides = {

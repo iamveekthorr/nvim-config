@@ -5,7 +5,8 @@ vim.opt.relativenumber = true
 vim.opt.number = true
 
 vim.opt.spell = true
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.linebreak = true
 
 vim.opt.showtabline = 0
 vim.opt.tabstop = 4
@@ -32,6 +33,13 @@ vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 8
 vim.opt.colorcolumn = "80"
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.cmd([[highlight ColorColumn guibg=NONE]])
+  end,
+})
+
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50

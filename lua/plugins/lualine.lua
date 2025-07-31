@@ -17,8 +17,8 @@ return {
 
     table.remove(opts.sections.lualine_x)
     table.remove(opts.sections.lualine_z)
-    opts.tabline = opts.sections
-    opts.tabline.lualine_c = {
+    -- opts.tabline = opts.sections
+    opts.sections.lualine_c = {
       LazyVim.lualine.root_dir(),
       {
         "diagnostics",
@@ -32,7 +32,7 @@ return {
     }
     opts.component_separators = { left = "", right = "" }
     opts.always_show_tabline = false
-    opts.sections = { lualine_a = {}, lualine_b = {}, lualine_c = {}, lualine_x = {}, lualine_y = {}, lualine_z = {} }
+    -- opts.sections = { lualine_a = {}, lualine_b = {}, lualine_c = {}, lualine_x = {}, lualine_y = {}, lualine_z = {} }
     opts.inactive_sections = {}
     opts.inactive_winbar = {
       lualine_a = {},
@@ -52,6 +52,6 @@ return {
     }
 
     require("lualine").setup(opts)
-    vim.cmd([[set laststatus=0]])
+    vim.cmd([[set laststatus=3]])
   end,
 }

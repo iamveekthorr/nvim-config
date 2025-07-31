@@ -1,7 +1,7 @@
 return {
   {
     "folke/tokyonight.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
       transparent = true,
       styles = {
@@ -11,11 +11,47 @@ return {
       style = "night",
     },
   },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    enabled = true,
+    config = function()
+      require("catppuccin").setup({
+        flavour = "auto", -- or latte, frappe, macchiato
+        transparent_background = true,
+        integrations = {
+          cmp = true,
+          nvimtree = true,
+          treesitter = true,
+          telescope = {
+            enabled = true,
+            style = nil,
+          },
+        },
+        highlight_overrides = {
+          all = function(colors)
+            return {
+              NormalFloat = { bg = "NONE" },
+              FloatBorder = { bg = "NONE" },
+              FloatTitle = { bg = "NONE" },
+              Pmenu = { bg = "NONE" },
+              PmenuSel = { bg = colors.surface0 },
+            }
+          end,
+        },
+      })
+    end,
+  },
 
   {
     "scottmckendry/cyberdream.nvim",
     opts = {
       transparent = true,
+      enabled = false,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
       italic_comments = true,
     },
   },
@@ -41,7 +77,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "tokyonight",
+      colorscheme = "catppuccin",
       defaults = {
         keymaps = false,
       },

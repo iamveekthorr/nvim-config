@@ -10,3 +10,15 @@ rng
 v1
 api
 json
+RabbitMQ
+RMQ
+BindQueue
+DeclareQueue
+DeclareExchange
+UTIL
+Type
+Type
+utils
+setupInfrastructure
+IsConnected
+monitorConnection

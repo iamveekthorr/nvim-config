@@ -2,14 +2,12 @@
 
 ## Core Keymaps
 
-Please Note that <leader> here means space
+Please Note that <leader> here means space and <localleader> means comma
 
 ### Search Navigation
 
 - `n` - Next search result (centered)
 - `N` - Previous search result (centered)
-- `n` (visual/operator) - Next search result
-- `N` (visual/operator) - Previous search result
 
 ### Indentation
 
@@ -18,10 +16,24 @@ Please Note that <leader> here means space
 
 ### Comments
 
+- `gc` - Comment toggle (normal/visual)
+- `<leader>/` - Comment line/selection
 - `gco` - Add comment below current line
 - `gcO` - Add comment above current line
 - `gct` - Add TODO comment below current line
 - `gcT` - Add TODO comment above current line
+
+### Code Folding (VSCode-like)
+
+- `<leader>zc` - Close fold under cursor
+- `<leader>zo` - Open fold under cursor
+- `<leader>za` - Toggle fold under cursor
+- `<leader>zC` - Close all folds under cursor recursively
+- `<leader>zO` - Open all folds under cursor recursively
+- `<leader>zM` - Close all folds in buffer
+- `<leader>zR` - Open all folds in buffer
+- `<leader>zm` - Fold more (increase fold level)
+- `<leader>zr` - Fold less (decrease fold level)
 
 ### Lists
 
@@ -56,17 +68,28 @@ Please Note that <leader> here means space
 
 ### Buffer Management
 
-- `<leader>bn` - Move to next buffer
-- `<leader>bp` - Move to previous buffer
 - `<leader><BS>` - Close buffer
 - `<leader>bC` - Close all buffers
 
-### Visual Mode Movement
+### Visual Mode Movement & Text Wrapping
 
 - `J` (visual) - Move selections down
 - `K` (visual) - Move selections up
+- `<leader>p` (visual) - Wrap selection in parentheses
+- `<leader>b` (visual) - Wrap selection in brackets
+- `<leader>B` (visual) - Wrap selection in braces
 
 ## Plugin Keymaps
+
+### Blink (Completion)
+
+- `<C-p>` (insert) - Show completion menu, show/hide documentation
+- `<C-c>` (insert) - Cancel completion
+- `<Up>` (insert) - Select previous completion item
+- `<Down>` (insert) - Select next completion item
+- `<C-b>` (insert) - Scroll documentation up
+- `<C-f>` (insert) - Scroll documentation down
+- `<C-k>` (insert) - Show/hide signature help
 
 ### Yanky (Yank History)
 
@@ -77,11 +100,34 @@ Please Note that <leader> here means space
 - `y` - Yank
 - `<leader>y` - Show yank history
 
+### Snacks (File Explorer & Picker)
+
+#### File Operations
+
+- `<leader>e` - Open explorer
+- `<leader>fr` - Recent files (cwd)
+- `<leader>ff` - Find files (Root Dir)
+- `<leader>fF` - Find files (cwd) with hidden/ignored
+- `<leader>fR` - Recent files (All)
+
+#### Search Operations
+
+- `<leader>s<cr>` - Resume picker
+- `<leader>sg` - Grep (Root Dir)
+- `<leader>sG` - Grep (cwd) with hidden/ignored
+
+#### Picker Internal (within picker interface)
+
+- `<C-d>` (insert/normal) - Preview scroll down
+- `<C-u>` (insert/normal) - Preview scroll up
+
 ### Treesitter Context
 
 - `<leader>ut` - Toggle treesitter context
 
 ### Substitute
+
+#### Basic Substitution
 
 - `s` - Substitute selection with register content
 - `ss` - Substitute line with register content
@@ -100,6 +146,28 @@ Please Note that <leader> here means space
 - `sxx` - Exchange line
 - `X` (visual) - Exchange visual selection
 - `sxc` - Cancel exchange
+
+### Mini.surround
+
+- `gsa` - Add surround
+- `gsd` - Delete surround
+- `gsr` - Replace surround
+
+### Trouble (Diagnostics)
+
+- `<leader>ce` - LSP references/definitions/... (Trouble)
+- `<leader>xx` - Buffer Diagnostics (Trouble)
+- `<leader>xX` - Diagnostics (Trouble)
+
+### Other.nvim (File Switching)
+
+- `<leader>oo` - Show other menu
+- `<leader>om` - Go to other module
+- `<leader>os` - Go to other service
+- `<leader>oa` - Go to other schema
+- `<leader>oc` - Go to other controller
+- `<leader>ot` - Go to other type
+- `<leader>ou` - Go to other util
 
 ### Smart Splits
 
@@ -144,17 +212,53 @@ Please Note that <leader> here means space
 
 ### Leader Key Groups
 
-- `<leader>x` - Lists (location, quickfix)
-- `<leader>c` - Code actions (diagnostics)
+- `<leader>z` - Code folding operations
+- `<leader>x` - Lists (location, quickfix, diagnostics)
+- `<leader>c` - Code actions (diagnostics, LSP)
 - `<leader>u` - UI toggles (inlay hints, treesitter context)
 - `<leader>g` - Git operations
 - `<leader>b` - Buffer operations
+- `<leader>f` - File operations (find, recent)
+- `<leader>s` - Search operations (grep, resume)
 - `<leader>r` - Substitute range operations
+- `<leader>o` - Other.nvim file switching
 - `<leader><leader>` - Swap buffer operations
-- `<leader>p` - Split actions
+- `<leader>p` - Split actions & visual text wrapping
 - `<leader>h` - Harpoon operations
+- `<leader>y` - Yank history
+- `<leader>e` - File explorer
+- `<leader>/` - Comments
 
 ### Special Keys
 
-- `<localleader>` - Local leader for window resize operations
+- `<localleader>` (comma) - Local leader for window resize operations
 - `<C-*>` - Control key combinations for navigation and quick actions
+- `g*` - Vim's "go" commands (surround, comments)
+- `s*` - Substitute operations
+- `]` / `[` - Next/previous navigation (errors, warnings)
+
+### Mode-Specific Keymaps
+
+#### Insert Mode
+
+- `<C-p>`, `<C-c>`, `<Up>`, `<Down>`, `<C-b>`, `<C-f>`, `<C-k>` - Completion (Blink)
+
+#### Visual Mode
+
+- `<`, `>` - Indentation
+- `J`, `K` - Move selections
+- `<leader>p`, `<leader>b`, `<leader>B` - Wrap in parentheses/brackets/braces
+- `s`, `X` - Substitute operations
+
+#### Normal Mode
+
+- Most keymaps are in normal mode by default
+
+## Disabled Features
+
+Some plugins have disabled keymaps to avoid conflicts:
+
+- Flash navigation (`s`, `S`, `R`)
+- Some default LazyVim keymaps (`<leader>E`, `<leader><space>`, etc.)
+- Buffer line (plugin disabled)
+- Auto pairs (plugin disabled)

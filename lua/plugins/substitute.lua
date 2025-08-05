@@ -55,10 +55,10 @@ return {
     })
 
     -- Exchange
-    vim.keymap.set("n", "sx", require("substitute.exchange").operator, { noremap = true })
-    vim.keymap.set("n", "sxx", require("substitute.exchange").line, { noremap = true })
-    vim.keymap.set("x", "X", require("substitute.exchange").visual, { noremap = true })
-    vim.keymap.set("n", "sxc", require("substitute.exchange").cancel, { noremap = true })
+    vim.keymap.set("n", "sx", require("substitute.exchange").operator, { noremap = true, desc = "Exchange operator" })
+    vim.keymap.set("n", "sxx", require("substitute.exchange").line, { noremap = true, desc = "Exchange line" })
+    vim.keymap.set("x", "X", require("substitute.exchange").visual, { noremap = true, desc = "Exchange visual selection" })
+    vim.keymap.set("n", "sxc", require("substitute.exchange").cancel, { noremap = true, desc = "Cancel exchange" })
 
     return vim
   end,

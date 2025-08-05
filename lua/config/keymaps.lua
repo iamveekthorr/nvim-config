@@ -7,8 +7,8 @@ vim.keymap.set("n", "n", "nzzzv", { desc = "Jump to next matching item and cente
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Jump to previous matching item and center" })
 
 -- better indenting
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv", { desc = "Decrease indentation (maintain selection)" })
+vim.keymap.set("v", ">", ">gv", { desc = "Increase indentation (maintain selection)" })
 
 -- commenting
 vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
@@ -92,7 +92,19 @@ vim.keymap.set("v", "<leader>b", 'c[<C-r>"]<Esc>', { desc = "Wrap selection in b
 vim.keymap.set("v", "<leader>B", 'c{<C-r>"}<Esc>', { desc = "Wrap selection in braces" })
 
 vim.keymap.set("n", "<leader><BS>", function()
-  Snacks.bufdelete.delete()
+  -- Only allow buffer deletion if there are actual file buffers open
+  local file_bufs = vim.tbl_filter(function(buf)
+    return vim.api.nvim_buf_is_valid(buf) 
+      and vim.bo[buf].buflisted 
+      and vim.bo[buf].buftype == ""
+      and vim.api.nvim_buf_get_name(buf) ~= ""
+  end, vim.api.nvim_list_bufs())
+  
+  if #file_bufs > 0 then
+    Snacks.bufdelete.delete()
+  else
+    vim.notify("No file buffers to close", vim.log.levels.INFO)
+  end
 end, { desc = "Close buffer" })
 vim.keymap.set("n", "<leader>bC", function()
   Snacks.bufdelete.all()

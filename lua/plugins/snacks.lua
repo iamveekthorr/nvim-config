@@ -7,8 +7,73 @@ local lockfiles = {
 
 return {
   "folke/snacks.nvim",
+  config = function(_, opts)
+    require("snacks").setup(opts)
+    
+    -- Clean integration with noice.nvim for dashboard
+    local function show_dashboard_safe()
+      vim.schedule(function()
+        local file_bufs = vim.tbl_filter(function(buf)
+          return vim.api.nvim_buf_is_valid(buf) 
+            and vim.bo[buf].buflisted 
+            and vim.bo[buf].buftype == ""
+            and vim.api.nvim_buf_get_name(buf) ~= ""
+        end, vim.api.nvim_list_bufs())
+        
+        -- Only show dashboard if no file buffers remain
+        if #file_bufs == 0 then
+          -- Simple approach: just create the dashboard
+          -- Let noice handle its own UI state
+          vim.defer_fn(function()
+            pcall(function()
+              require("snacks").dashboard()
+            end)
+          end, 50)
+        end
+      end)
+    end
+    
+    vim.api.nvim_create_augroup("DashboardSafe", { clear = true })
+    vim.api.nvim_create_autocmd("BufDelete", {
+      group = "DashboardSafe",
+      callback = show_dashboard_safe,
+    })
+  end,
   opts = {
-    dashboard = { enabled = false },
+    dashboard = {
+      enabled = true,
+      autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      preset = {
+        header = [[
+██╗   ██╗███████╗███████╗██╗  ██╗████████╗██╗  ██╗ ██████╗ ██████╗ ██████╗  
+██║   ██║██╔════╝██╔════╝██║ ██╔╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔══██╗ 
+██║   ██║█████╗  █████╗  █████╔╝    ██║   ███████║██║   ██║██████╔╝██████╔╝ 
+╚██╗ ██╔╝██╔══╝  ██╔══╝  ██╔═██╗    ██║   ██╔══██║██║   ██║██╔══██╗██╔══██╗ 
+ ╚████╔╝ ███████╗███████╗██║  ██╗   ██║   ██║  ██║╚██████╔╝██║  ██║██║  ██║ 
+  ╚═══╝  ╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ 
+        ]],
+        keys = {
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          {
+            icon = " ",
+            key = "c",
+            desc = "Config",
+            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+          },
+          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+        },
+      },
+      sections = {
+        { section = "header" },
+        { section = "keys", gap = 1, padding = 1 },
+        { section = "startup" },
+      },
+    },
     terminal = { enabled = false },
     scroll = { enabled = false },
     animate = { enabled = false },
@@ -75,6 +140,13 @@ return {
         Snacks.explorer({ cwd = LazyVim.root() })
       end,
       desc = "Open explorer",
+    },
+    {
+      "<leader>D",
+      function()
+        require("snacks").dashboard()
+      end,
+      desc = "Dashboard",
     },
     { "<leader>fe", false },
     { "<leader>fE", false },

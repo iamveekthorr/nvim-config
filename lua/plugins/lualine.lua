@@ -7,27 +7,36 @@ return {
       options = {
         theme = {
           normal = {
-            a = { bg = '#313244', fg = '#cdd6f4', gui = 'bold' }, -- Catppuccin surface0 bg, text fg
-            b = { bg = '#313244', fg = '#cdd6f4' },
-            c = { bg = '#313244', fg = '#cdd6f4' },
-            x = { bg = '#313244', fg = '#cdd6f4' },
-            y = { bg = '#313244', fg = '#cdd6f4' },
-            z = { bg = '#313244', fg = '#cdd6f4' },
+            a = { bg = '#89b4fa', fg = '#1e1e2e', gui = 'bold' }, -- Blue bg for mode
+            b = { bg = '#313244', fg = '#cdd6f4' }, -- Surface0 for secondary
+            c = { bg = '#313244', fg = '#cdd6f4' }, -- Surface0 for tertiary
+            x = { bg = '#45475a', fg = '#cdd6f4' }, -- Surface1 for right side
+            y = { bg = '#585b70', fg = '#cdd6f4' }, -- Surface2 for position
+            z = { bg = '#6c7086', fg = '#1e1e2e' }, -- Overlay0 for clock
           },
           insert = {
-            a = { bg = '#313244', fg = '#a6e3a1', gui = 'bold' }, -- Green for insert
+            a = { bg = '#a6e3a1', fg = '#1e1e2e', gui = 'bold' }, -- Green for insert
             b = { bg = '#313244', fg = '#cdd6f4' },
             c = { bg = '#313244', fg = '#cdd6f4' },
+            x = { bg = '#45475a', fg = '#cdd6f4' },
+            y = { bg = '#585b70', fg = '#cdd6f4' },
+            z = { bg = '#6c7086', fg = '#1e1e2e' },
           },
           visual = {
-            a = { bg = '#313244', fg = '#cba6f7', gui = 'bold' }, -- Mauve for visual
+            a = { bg = '#cba6f7', fg = '#1e1e2e', gui = 'bold' }, -- Mauve for visual
             b = { bg = '#313244', fg = '#cdd6f4' },
             c = { bg = '#313244', fg = '#cdd6f4' },
+            x = { bg = '#45475a', fg = '#cdd6f4' },
+            y = { bg = '#585b70', fg = '#cdd6f4' },
+            z = { bg = '#6c7086', fg = '#1e1e2e' },
           },
           command = {
-            a = { bg = '#313244', fg = '#f9e2af', gui = 'bold' }, -- Yellow for command
+            a = { bg = '#f9e2af', fg = '#1e1e2e', gui = 'bold' }, -- Yellow for command
             b = { bg = '#313244', fg = '#cdd6f4' },
             c = { bg = '#313244', fg = '#cdd6f4' },
+            x = { bg = '#45475a', fg = '#cdd6f4' },
+            y = { bg = '#585b70', fg = '#cdd6f4' },
+            z = { bg = '#6c7086', fg = '#1e1e2e' },
           },
         },
         globalstatus = true, -- Single statusline like VSCode
@@ -50,7 +59,7 @@ return {
         lualine_b = {
           {
             "branch",
-            icon = "",
+            icon = "⎇",
             padding = { left = 1, right = 1 },
           },
           {
@@ -103,8 +112,32 @@ return {
             padding = { left = 1, right = 1 },
           },
           {
+            function()
+              if vim.bo.buftype ~= "" or vim.fn.empty(vim.fn.expand("%:t")) == 1 then
+                return ""
+              end
+              return vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
+            end,
+            padding = { left = 1, right = 1 },
+          },
+          {
             "filetype",
             icon_only = false,
+            padding = { left = 1, right = 1 },
+          },
+          {
+            function()
+              -- OS icon only
+              if vim.fn.has("mac") == 1 then
+                return ""
+              elseif vim.fn.has("unix") == 1 then
+                return ""
+              elseif vim.fn.has("win32") == 1 then
+                return ""
+              else
+                return ""
+              end
+            end,
             padding = { left = 1, right = 1 },
           },
           {

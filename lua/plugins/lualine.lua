@@ -2,49 +2,50 @@ return {
   "nvim-lualine/lualine.nvim",
   config = function()
     local icons = LazyVim.config.icons
+    local theme = {
+      normal = {
+        a = { bg = "#89b4fa", fg = "#1e1e2e", gui = "bold" }, -- light blue
+        b = { bg = "#1e1e2e", fg = "#cdd6f4", gui = "bold" }, -- dark bg, soft fg
+        c = { bg = "#2c2f40", fg = "#bac2de" },
+        x = { bg = "#2c2f40", fg = "#bac2de" },
+        y = { bg = "#3b3f51", fg = "#bac2de" },
+        z = { bg = "#89b4fa", fg = "#1e1e2e" }, -- match section a
+      },
+      insert = {
+        a = { bg = "#a6e3a1", fg = "#1e1e2e", gui = "bold" }, -- mint green
+        b = { bg = "#1e1e2e", fg = "#cdd6f4" },
+        c = { bg = "#2c2f40", fg = "#bac2de" },
+        x = { bg = "#2c2f40", fg = "#bac2de" },
+        y = { bg = "#3b3f51", fg = "#bac2de" },
+        z = { bg = "#a6e3a1", fg = "#1e1e2e" },
+      },
+      visual = {
+        a = { bg = "#cba6f7", fg = "#1e1e2e", gui = "bold" }, -- soft purple
+        b = { bg = "#1e1e2e", fg = "#cdd6f4" },
+        c = { bg = "#2c2f40", fg = "#bac2de" },
+        x = { bg = "#2c2f40", fg = "#bac2de" },
+        y = { bg = "#3b3f51", fg = "#bac2de" },
+        z = { bg = "#cba6f7", fg = "#1e1e2e" },
+      },
+      command = {
+        a = { bg = "#f9e2af", fg = "#1e1e2e", gui = "bold" }, -- pastel yellow
+        b = { bg = "#1e1e2e", fg = "#cdd6f4" },
+        c = { bg = "#2c2f40", fg = "#bac2de" },
+        x = { bg = "#2c2f40", fg = "#bac2de" },
+        y = { bg = "#3b3f51", fg = "#bac2de" },
+        z = { bg = "#f9e2af", fg = "#1e1e2e" },
+      },
+    }
 
     require("lualine").setup({
       options = {
-        theme = {
-          normal = {
-            a = { bg = '#89b4fa', fg = '#1e1e2e', gui = 'bold' }, -- Blue bg for mode
-            b = { bg = '#313244', fg = '#cdd6f4' }, -- Surface0 for secondary
-            c = { bg = '#313244', fg = '#cdd6f4' }, -- Surface0 for tertiary
-            x = { bg = '#45475a', fg = '#cdd6f4' }, -- Surface1 for right side
-            y = { bg = '#585b70', fg = '#cdd6f4' }, -- Surface2 for position
-            z = { bg = '#6c7086', fg = '#1e1e2e' }, -- Overlay0 for clock
-          },
-          insert = {
-            a = { bg = '#a6e3a1', fg = '#1e1e2e', gui = 'bold' }, -- Green for insert
-            b = { bg = '#313244', fg = '#cdd6f4' },
-            c = { bg = '#313244', fg = '#cdd6f4' },
-            x = { bg = '#45475a', fg = '#cdd6f4' },
-            y = { bg = '#585b70', fg = '#cdd6f4' },
-            z = { bg = '#6c7086', fg = '#1e1e2e' },
-          },
-          visual = {
-            a = { bg = '#cba6f7', fg = '#1e1e2e', gui = 'bold' }, -- Mauve for visual
-            b = { bg = '#313244', fg = '#cdd6f4' },
-            c = { bg = '#313244', fg = '#cdd6f4' },
-            x = { bg = '#45475a', fg = '#cdd6f4' },
-            y = { bg = '#585b70', fg = '#cdd6f4' },
-            z = { bg = '#6c7086', fg = '#1e1e2e' },
-          },
-          command = {
-            a = { bg = '#f9e2af', fg = '#1e1e2e', gui = 'bold' }, -- Yellow for command
-            b = { bg = '#313244', fg = '#cdd6f4' },
-            c = { bg = '#313244', fg = '#cdd6f4' },
-            x = { bg = '#45475a', fg = '#cdd6f4' },
-            y = { bg = '#585b70', fg = '#cdd6f4' },
-            z = { bg = '#6c7086', fg = '#1e1e2e' },
-          },
-        },
+        theme = theme,
         globalstatus = true, -- Single statusline like VSCode
         component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
         disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
       },
-      
+
       sections = {
         -- Far left: Mode (like original config)
         lualine_a = {
@@ -54,12 +55,12 @@ return {
             padding = { left = 1, right = 1 },
           },
         },
-        
+
         -- Left side: Branch, diagnostics, folder (VSCode bottom-left style)
         lualine_b = {
           {
             "branch",
-            icon = "⎇",
+            icon = "",
             padding = { left = 1, right = 1 },
           },
           {
@@ -74,12 +75,18 @@ return {
           },
           {
             function()
-              return "󰌪 " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+              return "| "
+            end,
+            padding = { left = 0, right = 0 },
+          },
+          {
+            function()
+              return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
             end,
             padding = { left = 0, right = 1 },
           },
         },
-        
+
         -- Center-left: File status
         lualine_c = {
           {
@@ -97,18 +104,42 @@ return {
             padding = { left = 1, right = 1 },
           },
         },
-        
-        
+
         -- Right side: File info, cursor position (VSCode bottom-right style)
         lualine_x = {
           {
             function()
-              local buffers = vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr("$")), "buflisted(v:val)"))
-              if vim.bo.buftype ~= "terminal" and vim.fn.empty(vim.fn.expand("%:t")) == 0 then
-                return "󰓩 " .. buffers .. " buffers"
+              -- Only show Git user if we're inside a Git repo
+              if vim.fn.isdirectory(".git") == 0 then
+                return ""
+              end
+
+              local handle = io.popen("git config user.name 2>/dev/null")
+              if not handle then
+                return ""
+              end
+
+              local name = handle:read("*l")
+              handle:close()
+
+              if name and name ~= "" then
+                return "  " .. "Git User - " .. name -- Git icon + username
               end
               return ""
             end,
+            icon = nil,
+            padding = { left = 1, right = 1 },
+            color = theme.command.a,
+          },
+          {
+            function()
+              local buffers = vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr("$")), "buflisted(v:val)"))
+              if vim.bo.buftype ~= "terminal" and vim.fn.empty(vim.fn.expand("%:t")) == 0 then
+                return "󰓩 " .. " " .. buffers .. " buffer(s)"
+              end
+              return ""
+            end,
+            color = { fg = theme.normal.b.bg, bg = theme.normal.b.fg },
             padding = { left = 1, right = 1 },
           },
           {
@@ -127,17 +158,16 @@ return {
           },
           {
             function()
-              -- OS icon only
-              if vim.fn.has("mac") == 1 then
-                return ""
-              elseif vim.fn.has("unix") == 1 then
-                return ""
-              elseif vim.fn.has("win32") == 1 then
-                return ""
-              else
-                return ""
+              local os = jit.os
+              if os == "OSX" then
+                return "   Mac" -- macOS
+              elseif os == "Linux" then
+                return "   Linux" -- Linux
+              elseif os == "Windows" then
+                return " 󰍲  Windows" -- Windows
               end
             end,
+            color = { fg = theme.command.a.fg, bg = theme.command.a.bg },
             padding = { left = 1, right = 1 },
           },
           {
@@ -159,10 +189,11 @@ return {
               end
               return string.format("%.1f%s", size, suffixes[i])
             end,
+            color = { fg = theme.normal.b.bg, bg = theme.normal.b.fg },
             padding = { left = 1, right = 1 },
           },
         },
-        
+
         -- Far right: Line/column position
         lualine_y = {
           {
@@ -172,7 +203,7 @@ return {
             padding = { left = 1, right = 1 },
           },
         },
-        
+
         -- Clock (your current feature)
         lualine_z = {
           {
@@ -183,7 +214,7 @@ return {
           },
         },
       },
-      
+
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
@@ -192,7 +223,7 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
-      
+
       winbar = {
         lualine_c = {
           {
@@ -210,18 +241,18 @@ return {
           },
         },
       },
-      
+
       inactive_winbar = {
         lualine_c = {
           {
-            "filename", 
+            "filename",
             path = 1,
             padding = 1,
           },
         },
       },
     })
-    
+
     -- Global statusline
     vim.cmd([[set laststatus=3]])
   end,

@@ -15,13 +15,12 @@ return {
       local start_time = vim.fn.reltime()
       -- Simple CPU-bound test to measure system responsiveness
       for i = 1, 1000 do
-        math.sin(i)
+        local _ = math.sin(i)
       end
       local elapsed = vim.fn.reltimefloat(vim.fn.reltime(start_time))
       -- Base delay of 100ms, add more if system is slow
       return math.max(100, math.min(500, 100 + elapsed * 50000))
     end
-
 
     -- Set custom header with NEOVIM ASCII art
     dashboard.section.header.val = {
@@ -40,15 +39,19 @@ return {
     -- Create main action buttons
     dashboard.section.buttons.val = {
       dashboard.button("e", "󰈔  New File", "<cmd>ene<CR>"),
-      dashboard.button("f", "󰱼  Find File", function() LazyVim.pick("files", { root = false })() end),
-      dashboard.button("g", "  Find Word", function() LazyVim.pick("live_grep", { root = false })() end),
-      dashboard.button("r", "  Recent Files", function() require("snacks").picker.recent({ filter = { cwd = true } }) end),
-      dashboard.button("x", "  File Explorer", function() require("snacks").explorer({ cwd = LazyVim.root() }) end),
+      dashboard.button("f", "󰱼  Find File", "<cmd>lua LazyVim.pick('files', { root = false })()<CR>"),
+      dashboard.button("g", "  Find Word", "<cmd>lua LazyVim.pick('live_grep', { root = false })()<CR>"),
+      dashboard.button(
+        "r",
+        "  Recent Files",
+        "<cmd>lua require('snacks').picker.recent({ filter = { cwd = true } })<CR>"
+      ),
+      dashboard.button("x", "  File Explorer", "<cmd>lua require('snacks').explorer({ cwd = LazyVim.root() })<CR>"),
       dashboard.button("c", "  Configuration", "<cmd>edit $MYVIMRC<CR>"),
       dashboard.button("q", "  Quit", "<cmd>qa<CR>"),
     }
 
-
+    math.randomseed(os.time())
 
     -- Add inspirational quotes
     local quotes = {
@@ -88,11 +91,11 @@ return {
       local content_lines = 12 -- Approximate lines for two-panel content
       local footer_lines = 3
       local total_content = header_lines + content_lines + footer_lines
-      
+
       -- Calculate padding to center content
       local available_space = total_lines - total_content
       local top_padding = math.max(1, math.floor(available_space * 0.3)) -- 30% at top
-      
+
       return top_padding
     end
 
@@ -112,27 +115,27 @@ return {
     local function alpha_on_empty()
       -- Use adaptive delay instead of hardcoded 200ms
       local delay = get_adaptive_delay()
-      
+
       vim.defer_fn(function()
         -- Don't show alpha if we're in certain buffer types
         local current_buf = vim.api.nvim_get_current_buf()
         local current_buftype = vim.bo[current_buf].buftype
         local current_filetype = vim.bo[current_buf].filetype
-        
+
         -- Skip if we're in special buffers
         if current_buftype ~= "" and current_buftype ~= "nofile" then
           return
         end
-        
+
         -- Skip if we're in explorer or other special filetypes
         if current_filetype == "snacks_explorer" or current_filetype == "neo-tree" or current_filetype == "alpha" then
           return
         end
-        
+
         local bufs = vim.api.nvim_list_bufs()
         local count = 0
         local has_empty_unnamed = false
-        
+
         for _, buf in ipairs(bufs) do
           if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted then
             local bufname = vim.api.nvim_buf_get_name(buf)
@@ -140,13 +143,14 @@ return {
             local filetype = vim.bo[buf].filetype
             local is_modified = vim.bo[buf].modified
             local line_count = vim.api.nvim_buf_line_count(buf)
-            
+
             -- Count real file buffers AND any normal editing buffers (including unnamed)
-            if buftype == "" and 
-               filetype ~= "alpha" and
-               filetype ~= "snacks_explorer" and
-               not bufname:match("alpha%-nvim") then
-              
+            if
+              buftype == ""
+              and filetype ~= "alpha"
+              and filetype ~= "snacks_explorer"
+              and not bufname:match("alpha%-nvim")
+            then
               -- Better handling of empty files
               if bufname ~= "" then
                 -- Named file always counts
@@ -164,10 +168,10 @@ return {
             end
           end
         end
-        
+
         -- Show alpha if no file buffers, or only empty unnamed buffers exist
         local should_show_alpha = count == 0 and (current_buftype == "" or current_buftype == "nofile")
-        
+
         -- Special handling: if user pressed 'e' and created empty buffer, allow closing it to return to alpha
         if should_show_alpha or (count == 0 and has_empty_unnamed and current_buftype == "") then
           -- Refresh the quote
@@ -178,7 +182,7 @@ return {
     end
 
     vim.api.nvim_create_augroup("alpha_on_empty", { clear = true })
-    
+
     -- Use BufDelete and BufWipeout but with more restrictive conditions
     vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
       group = "alpha_on_empty",
@@ -186,11 +190,11 @@ return {
         -- Don't trigger if it's a special buffer being deleted
         local buftype = vim.bo[args.buf].buftype
         local filetype = vim.bo[args.buf].filetype
-        
+
         if buftype ~= "" or filetype == "alpha" or filetype == "snacks_explorer" then
           return
         end
-        
+
         alpha_on_empty()
       end,
     })
@@ -206,21 +210,21 @@ return {
         vim.opt_local.cursorline = false
       end,
     })
-    
+
     -- Ensure alpha stays visible and prevent other plugins from opening
     vim.api.nvim_create_autocmd("User", {
       pattern = "AlphaReady",
       callback = function()
         -- Refresh quote when alpha is shown
         dashboard.section.footer.val = get_random_quote()
-        
+
         -- Prevent LazyVim from opening other buffers when alpha is shown
         vim.schedule(function()
           vim.cmd("doautocmd User LazyDone") -- Mark lazy as done to prevent interference
         end)
       end,
     })
-    
+
     -- Refresh dashboard content when it becomes visible
     vim.api.nvim_create_autocmd("BufWinEnter", {
       pattern = "*",

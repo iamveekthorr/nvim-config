@@ -173,11 +173,11 @@ return {
             function()
               local os = jit.os
               if os == "OSX" then
-                return "   Mac" -- macOS
+                return "   Mac " -- macOS
               elseif os == "Linux" then
-                return "   Linux" -- Linux
+                return "   Linux " -- Linux
               elseif os == "Windows" then
-                return " 󰍲  Windows" -- Windows
+                return " 󰍲  Windows " -- Windows
               end
             end,
             color = theme.command.a,

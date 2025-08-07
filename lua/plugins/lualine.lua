@@ -71,24 +71,36 @@ return {
               info = icons.diagnostics.Info .. " ",
               hint = icons.diagnostics.Hint .. " ",
             },
-            padding = { left = 0, right = 1 },
+            padding = { left = 1, right = 1 },
           },
           {
             function()
-              return "| "
+              return "|"
             end,
-            padding = { left = 0, right = 0 },
+            padding = { left = 1, right = 1 },
           },
           {
             function()
               return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
             end,
-            padding = { left = 0, right = 1 },
+            padding = { left = 1, right = 2 },
           },
         },
 
-        -- Center-left: File status
+        -- Center-left: Recording indicator + File status
         lualine_c = {
+          {
+            function()
+              local reg = vim.fn.reg_recording()
+              if reg == "" then
+                return ""
+              else
+                return "Recording @" .. reg
+              end
+            end,
+            color = theme.insert.a, -- red text, styled bold
+            padding = { left = 1, right = 1 },
+          },
           {
             function()
               if vim.fn.empty(vim.fn.expand("%:t")) == 1 or vim.bo.buftype ~= "" then
@@ -123,12 +135,12 @@ return {
               handle:close()
 
               if name and name ~= "" then
-                return "  " .. "Git User - " .. name -- Git icon + username
+                return string.format("%-25s", "  Git User - " .. name) -- Git icon + username
               end
               return ""
             end,
             icon = nil,
-            padding = { left = 1, right = 1 },
+            padding = { left = 2, right = 2 },
             color = theme.command.a,
           },
           {
@@ -140,7 +152,7 @@ return {
               return ""
             end,
             color = { fg = theme.normal.b.bg, bg = theme.normal.b.fg },
-            padding = { left = 1, right = 1 },
+            padding = { left = 2, right = 2 },
           },
           {
             function()
@@ -149,12 +161,13 @@ return {
               end
               return vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
             end,
-            padding = { left = 1, right = 1 },
+            padding = { left = 2, right = 2 },
+            color = theme.insert.a,
           },
           {
             "filetype",
             icon_only = false,
-            padding = { left = 1, right = 1 },
+            padding = { left = 2, right = 2 },
           },
           {
             function()
@@ -167,7 +180,7 @@ return {
                 return " 󰍲  Windows" -- Windows
               end
             end,
-            color = { fg = theme.command.a.fg, bg = theme.command.a.bg },
+            color = theme.command.a,
             padding = { left = 1, right = 1 },
           },
           {
@@ -255,5 +268,14 @@ return {
 
     -- Global statusline
     vim.cmd([[set laststatus=3]])
+
+    -- Update statusline immediately when recording starts/stops
+    vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
+      callback = function()
+        vim.schedule(function()
+          vim.cmd("redrawstatus")
+        end)
+      end,
+    })
   end,
 }

@@ -40,15 +40,15 @@ return {
     dashboard.section.buttons.val = {
       dashboard.button("e", "󰈔  New File", "<cmd>ene<CR>"),
       dashboard.button("f", "󰱼  Find File", "<cmd>lua LazyVim.pick('files', { root = false })()<CR>"),
-      dashboard.button("g", "  Find Word", "<cmd>lua LazyVim.pick('live_grep', { root = false })()<CR>"),
+      dashboard.button("g", "  Find Word", "<cmd>lua LazyVim.pick('live_grep', { root = false })()<CR>"),
       dashboard.button(
         "r",
-        "  Recent Files",
+        "󰔟  Recent Files",
         "<cmd>lua require('snacks').picker.recent({ filter = { cwd = true } })<CR>"
       ),
-      dashboard.button("x", "  File Explorer", "<cmd>lua require('snacks').explorer({ cwd = LazyVim.root() })<CR>"),
-      dashboard.button("c", "  Configuration", "<cmd>edit $MYVIMRC<CR>"),
-      dashboard.button("q", "  Quit", "<cmd>qa<CR>"),
+      dashboard.button("x", "  File Explorer", "<cmd>lua require('snacks').explorer({ cwd = LazyVim.root() })<CR>"),
+      dashboard.button("c", "  Configuration", "<cmd>edit $MYVIMRC<CR>"),
+      dashboard.button("q", "󰈆  Quit", "<cmd>qa<CR>"),
     }
 
     math.randomseed(os.time())

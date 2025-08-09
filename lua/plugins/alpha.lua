@@ -46,6 +46,7 @@ return {
         "󰔟  Recent Files",
         "<cmd>lua require('snacks').picker.recent({ filter = { cwd = true } })<CR>"
       ),
+      dashboard.button("S", "󰙰  Restore Last Session", "<cmd>lua require('persistence').load()<CR>"),
       dashboard.button("x", "  File Explorer", "<cmd>lua require('snacks').explorer({ cwd = LazyVim.root() })<CR>"),
       dashboard.button("c", "  Configuration", "<cmd>edit $MYVIMRC<CR>"),
       dashboard.button("q", "󰈆  Quit", "<cmd>qa<CR>"),

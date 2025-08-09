@@ -32,6 +32,7 @@
 vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.conf*]])
 vim.cmd([[autocmd BufRead,BufNewFile *.conf,*.conf.template set filetype=nginx]])
 vim.cmd([[autocmd FileType nginx setlocal iskeyword+=$]])
+
 -- Set comment for package name in file to avoid golint warnings
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
   pattern = "*.go",

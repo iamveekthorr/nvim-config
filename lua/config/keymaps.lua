@@ -80,8 +80,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Jump up and center" })
 
 vim.keymap.set("n", "<C-q>", "<cmd>qa!<CR>", { desc = "Quit nvim violently" })
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save buffer" })
-vim.keymap.set("n", "|", "<cmd>split<cr>", { desc = "Vertical split" })
-vim.keymap.set("n", "\\", "<cmd>vsplit<cr>", { desc = "Horizontal split" })
+vim.keymap.set("n", "|", "<cmd>new<cr>", { desc = "Vertical split with new buffer" })
+vim.keymap.set("n", "\\", "<cmd>vnew<cr>", { desc = "Horizontal split with new buffer" })
 
 -- Visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selections down" })
@@ -94,12 +94,12 @@ vim.keymap.set("v", "<leader>B", 'c{<C-r>"}<Esc>', { desc = "Wrap selection in b
 vim.keymap.set("n", "<leader><BS>", function()
   -- Only allow buffer deletion if there are actual file buffers open
   local file_bufs = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_valid(buf) 
-      and vim.bo[buf].buflisted 
+    return vim.api.nvim_buf_is_valid(buf)
+      and vim.bo[buf].buflisted
       and vim.bo[buf].buftype == ""
       and vim.api.nvim_buf_get_name(buf) ~= ""
   end, vim.api.nvim_list_bufs())
-  
+
   if #file_bufs > 0 then
     Snacks.bufdelete.delete()
   else

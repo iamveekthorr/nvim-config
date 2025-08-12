@@ -96,12 +96,6 @@ return {
 
     vim.keymap.set({ "n", "v" }, "<leader>pm", "<cmd>MaximizerToggle!<CR>", { desc = "Toggle maximize current split" })
 
-    vim.keymap.set("n", "<leader>pc", function()
-      local buf = vim.api.nvim_get_current_buf()
-      vim.cmd("close")
-      if vim.api.nvim_buf_is_valid(buf) then
-        vim.api.nvim_buf_delete(buf, { force = false })
-      end
-    end, { desc = "Close current split and buffer" })
+    vim.keymap.set("n", "<leader>pc", "<cmd>close<CR>", { desc = "Close current split" })
   end,
 }

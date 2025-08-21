@@ -71,18 +71,19 @@ vim.cmd([[
 ]])
 
 -- When closing a buffer in a split, close the split and keep remaining buffer as single window
-vim.api.nvim_create_autocmd("BufDelete", {
-  callback = function()
-    local wins = vim.api.nvim_list_wins()
-    local tabwins = vim.tbl_filter(function(w)
-      return vim.api.nvim_win_get_tabpage(w) == vim.api.nvim_get_current_tabpage()
-    end, wins)
+-- vim.api.nvim_create_autocmd("BufDelete", {
+--   callback = function()
+--     local wins = vim.api.nvim_list_wins()
+--     local tabwins = vim.tbl_filter(function(w)
+--       return vim.api.nvim_win_get_tabpage(w) == vim.api.nvim_get_current_tabpage()
+--     end, wins)
+--
+--     -- Only act if we have exactly 2 windows in the current tab
+--     if #tabwins == 2 then
+--       vim.schedule(function()
+--         vim.cmd("only")
+--       end)
+--     end
+--   end,
+-- })
 
-    -- Only act if we have exactly 2 windows in the current tab
-    if #tabwins == 2 then
-      vim.schedule(function()
-        vim.cmd("only")
-      end)
-    end
-  end,
-})

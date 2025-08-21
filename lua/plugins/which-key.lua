@@ -44,13 +44,13 @@ return {
       { "<leader>u", group = "UI" },
       { "<leader>x", group = "Diagnostics" },
       { "<leader>y", group = "Yank" },
-      
+
       -- Non-leader groups
       { "s", group = "Substitute" },
       { "g", group = "Go" },
       { "]", group = "Next" },
       { "[", group = "Previous" },
-      
+
       -- Hide some noisy keymaps
       { "<leader>w", hidden = true },
       { "?", hidden = true },

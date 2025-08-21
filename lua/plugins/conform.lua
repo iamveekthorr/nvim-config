@@ -10,6 +10,7 @@ return {
       scss = { "prettier" },
       rust = { "rustfmt" },
       go = { "gofmt" },
+      sql = { "sqlfluff" },
     },
   },
 }

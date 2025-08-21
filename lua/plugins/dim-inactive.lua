@@ -6,7 +6,7 @@ return {
       filter_type = "SHADE",
       filter_percent = 0.65,
     })
-    
+
     -- Refresh sunglasses when terminal closes and focus returns to code
     vim.api.nvim_create_autocmd("TermClose", {
       callback = function()

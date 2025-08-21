@@ -91,21 +91,6 @@ vim.keymap.set("v", "<leader>p", 'c(<C-r>")<Esc>', { desc = "Wrap selection in p
 vim.keymap.set("v", "<leader>b", 'c[<C-r>"]<Esc>', { desc = "Wrap selection in brackets" })
 vim.keymap.set("v", "<leader>B", 'c{<C-r>"}<Esc>', { desc = "Wrap selection in braces" })
 
-vim.keymap.set("n", "<leader><BS>", function()
-  -- Only allow buffer deletion if there are actual file buffers open
-  local file_bufs = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_valid(buf)
-      and vim.bo[buf].buflisted
-      and vim.bo[buf].buftype == ""
-      and vim.api.nvim_buf_get_name(buf) ~= ""
-  end, vim.api.nvim_list_bufs())
-
-  if #file_bufs > 0 then
-    Snacks.bufdelete.delete()
-  else
-    vim.notify("No file buffers to close", vim.log.levels.INFO)
-  end
-end, { desc = "Close buffer" })
 vim.keymap.set("n", "<leader>bC", function()
   Snacks.bufdelete.all()
 end, { desc = "Close all buffers" })
